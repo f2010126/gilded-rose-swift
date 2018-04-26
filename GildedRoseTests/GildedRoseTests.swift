@@ -245,18 +245,18 @@ class GildedRoseTests: XCTestCase {
         XCTAssertEqual(expectedOutput, actualOutput)
     }
     
-    
-    func testUpdateQuantityWithPassesBorderQuantity50NearSellDate(){
-        let input = [Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 11, quality: 50)]
-        let expectedOutput = [Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 50)]
+    //EXTRA TEST CASES
+    func testUpdateQuantityWithPassesBorderQuantity49Sellin8(){
+        let input = [Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 8, quality: 49)]
+        let expectedOutput = [Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 7, quality: 50)]
         let actualOutput = GildedRose.updateQuality(items: input)
         
         XCTAssertEqual(expectedOutput, actualOutput)
     }
     
-    func testUpdateQuantityWithPassesBorderQuantity49(){
-        let input = [Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 11, quality: 49)]
-        let expectedOutput = [Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 10, quality: 50)]
+    func testUpdateQuantityWithPassesBorderQuantity49Sellin3(){
+        let input = [Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 3, quality: 49)]
+        let expectedOutput = [Item(name: "Backstage passes to a TAFKAL80ETC concert", sellIn: 2, quality: 50)]
         let actualOutput = GildedRose.updateQuality(items: input)
         
         XCTAssertEqual(expectedOutput, actualOutput)

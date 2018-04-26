@@ -51,17 +51,19 @@ class CheeseModifier: ItemModifier{
 class BackStageModifier: ItemModifier{
     
     override func handleQtyUpdate(){
-        if myItem.quality < 50{  //TEST THIS AT EDGE
-            switch(myItem.sellIn){
-            case 0...5: myItem.quality = myItem.quality + 3
-            case 6...10: myItem.quality = myItem.quality + 2
-            default: myItem.quality = myItem.quality + 1
-            }
-        }else{
+        var increase = 1
+        switch myItem.sellIn {
+        case 0...5: increase = 3
+        case 6...10: increase = 2
+        default: increase = 1
+        }
+        if myItem.quality + increase > 50{
             myItem.quality = 50
+        }else{
+            myItem.quality = myItem.quality + increase
         }
     }
-
+    
     override func handleItemExpiredUpdate(){
         if (myItem.sellIn < 0){
             myItem.quality = 0
