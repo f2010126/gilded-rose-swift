@@ -6,60 +6,34 @@
 //  Copyright © 2015 Tom Heinan. All rights reserved.
 //
 
+struct Constants {
+    //App Constants
+    static let CHEESE = "Aged Brie"
+    static let CONCERT = "Backstage passes to a TAFKAL80ETC concert"
+    static let HAND = "Sulfuras, Hand of Ragnaros"
+    static let CONJURED = "Conjured"
+    
+}
 public class GildedRose {
-
+    //SOLID Principle. 1 function does only 1 thing.
     public static func updateQuality(items: Array<Item>) -> [Item] {
         var items = items
         for i in 0 ..< items.count {
-            if items[i].name != "Aged Brie" && items[i].name != "Backstage passes to a TAFKAL80ETC concert" {
-                if items[i].quality > 0 {
-                    if items[i].name != "Sulfuras, Hand of Ragnaros" {
-                        items[i].quality = items[i].quality - 1
-                    }
-                }
-            } else {
-                if items[i].quality < 50 {
-                    items[i].quality = items[i].quality + 1
-                    
-                    if items[i].name == "Backstage passes to a TAFKAL80ETC concert" {
-                        if items[i].sellIn < 11 {
-                            if items[i].quality < 50 {
-                                items[i].quality = items[i].quality + 1
-                            }
-                        }
-                        
-                        if items[i].sellIn < 6 {
-                            if items[i].quality < 50 {
-                                items[i].quality = items[i].quality + 1
-                            }
-                        }
-                    }
-                }
-            }
-            
-            if items[i].name != "Sulfuras, Hand of Ragnaros" {
-                items[i].sellIn = items[i].sellIn - 1
-            }
-            
-            if items[i].sellIn < 0 {
-                if items[i].name != "Aged Brie" {
-                    if items[i].name != "Backstage passes to a TAFKAL80ETC concert" {
-                        if items[i].quality > 0 {
-                            if items[i].name != "Sulfuras, Hand of Ragnaros" {
-                                items[i].quality = items[i].quality - 1
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality
-                    }
-                } else {
-                    if items[i].quality < 50 {
-                        items[i].quality = items[i].quality + 1
-                    }
-                }
+            switch(items[i].name){
+            case Constants.CHEESE: let cheeseItem = CheeseModifier(setItem: items[i]).updateItem()
+                items[i] = cheeseItem
+            case Constants.CONCERT: let concertItem = BackStageModifier(setItem: items[i]).updateItem()
+                items[i] = concertItem
+            case Constants.HAND: //do nothing
+               continue
+            case let str where str.contains(Constants.CONJURED):
+                let conjuredItem = ConjuredModifier(setItem: items[i]).updateItem()
+                items[i] = conjuredItem
+            default:
+                let normalItem = ItemModifier(setItem: items[i]).updateItem()
+                items[i] = normalItem
             }
         }
-        
         return items
     }
     
